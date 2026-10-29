@@ -252,6 +252,8 @@
     sayfa = sayfa.slice(0, 500);
     var baslik = document.title.slice(0, 300);
     var biriken = 0;
+    var videoBiriken = 0;
+    var videoSayfasi = !!document.querySelector(".yt-video");
     var sonEtkilesim = Date.now();
 
     function etkilesim() { sonEtkilesim = Date.now(); }
@@ -265,24 +267,29 @@
           (videoOynuyor || Date.now() - sonEtkilesim < BOSTA_SINIRI)) {
         biriken += 1;
       }
+      if (videoOynuyor) videoBiriken += 1; // videonun gerçekten oynadığı saniyeler
     }, 1000);
 
     function gonder() {
       var sn = biriken;
-      if (sn < 1) return;
+      var vsn = videoBiriken;
+      if (sn < 1 && vsn < 1) return;
       biriken = 0;
+      videoBiriken = 0;
+      var kayit = {
+        kullanici: ad,
+        sayfa: sayfa,
+        sayfa_basligi: baslik,
+        oturum_id: kimlik,
+        sure_saniye: Math.min(sn, 3600)
+      };
+      if (videoSayfasi) kayit.video_saniye = Math.min(vsn, 3600);
       try {
         fetch(url + "/rest/v1/sayfa_sureleri", {
           method: "POST",
           keepalive: true,
           headers: basliklar,
-          body: JSON.stringify({
-            kullanici: ad,
-            sayfa: sayfa,
-            sayfa_basligi: baslik,
-            oturum_id: kimlik,
-            sure_saniye: Math.min(sn, 3600)
-          })
+          body: JSON.stringify(kayit)
         }).catch(function () { /* ağ hatası: sessizce geç */ });
       } catch (e) { /* yoksay */ }
     }

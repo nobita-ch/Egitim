@@ -252,7 +252,6 @@
     sayfa = sayfa.slice(0, 500);
     var baslik = document.title.slice(0, 300);
     var biriken = 0;
-    var videoBiriken = 0;
     var videoSayfasi = !!document.querySelector(".yt-video");
     var sonEtkilesim = Date.now();
 
@@ -267,15 +266,15 @@
           (videoOynuyor || Date.now() - sonEtkilesim < BOSTA_SINIRI)) {
         biriken += 1;
       }
-      if (videoOynuyor) videoBiriken += 1; // videonun gerçekten oynadığı saniyeler
     }, 1000);
 
     function gonder() {
       var sn = biriken;
-      var vsn = videoBiriken;
+      // video.js'in ölçtüğü, videonun gerçekten ilerlediği saniyeler
+      var vsn = videoSayfasi ? Math.floor(window.EGITIM_VIDEO_SANIYE || 0) : 0;
       if (sn < 1 && vsn < 1) return;
       biriken = 0;
-      videoBiriken = 0;
+      if (vsn > 0) window.EGITIM_VIDEO_SANIYE -= vsn;
       var kayit = {
         kullanici: ad,
         sayfa: sayfa,

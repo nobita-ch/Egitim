@@ -18,6 +18,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/ayarlar.js
+  - javascripts/video.js
   - javascripts/giris.js
 
 not_in_nav: |
@@ -93,3 +94,43 @@ nav:
         - Sorular-23: "Sorular-23.md"
         - Sorular-24: "Sorular-24.md"
         - Sorular-25: "Sorular-25.md"
+  - Mekanik:
+      - SolidWorks Eğitim Videoları:
+          - Genel Bakış: mekanik/solidworks/index.md
+          - Temel Dersler:
+              - "Ders 1 – 2D Çizim": mekanik/solidworks/video-01.md
+              - "Ders 2 – Budama, Öteleme, Aynalama, Doğrusal Çoğaltma, Taşıma": mekanik/solidworks/video-02.md
+              - "Ders 3 – 2D Uygulama 1/2": mekanik/solidworks/video-03.md
+              - "Ders 4 – 2D Uygulama 3": mekanik/solidworks/video-04.md
+              - "Ders 5 – 2D Uygulama 4": mekanik/solidworks/video-05.md
+              - "Ders 6 – 3D Çizime Giriş – Ekstrüzyon": mekanik/solidworks/video-06.md
+              - "Ders 7 – Döndürerek Katı Oluşturma": mekanik/solidworks/video-07.md
+              - "Ders 8 – Ekstrüzyon ile Kesme": mekanik/solidworks/video-08.md
+              - "Ders 9 – Döndürerek Kesme": mekanik/solidworks/video-09.md
+              - "Ders 10 – Düzlem Atama – Kesit Görünümü": mekanik/solidworks/video-10.md
+              - "Ders 11 – Süpürerek Katı Oluşturma": mekanik/solidworks/video-11.md
+              - "Ders 12 – Loft ile Katı Oluşturma": mekanik/solidworks/video-12.md
+              - "Ders 13 – Loft – Süpürerek Kesme": mekanik/solidworks/video-13.md
+              - "Ders 14 – Sınır ile Katılama – Kesme": mekanik/solidworks/video-14.md
+              - "Ders 15 – Radius – Pah": mekanik/solidworks/video-15.md
+              - "Ders 16 – Doğrusal – Dairesel Çoğaltma": mekanik/solidworks/video-16.md
+              - "Ders 17 – Aynalama – Kabuk": mekanik/solidworks/video-17.md
+              - "Ders 18 – Feder (Rib) – Sar (Wrap)": mekanik/solidworks/video-18.md
+              - "Ders 19 – Delik Sihirbazı – Diş Açma – Boyama": mekanik/solidworks/video-19.md
+              - "Ders 20 – 3D Çizim Örneği 1": mekanik/solidworks/video-20.md
+              - "Ders 21 – 3D Çizim Örneği 2 – Apple Logosu": mekanik/solidworks/video-21.md
+              - "Ders 22 – 3D Çizim Örneği 3": mekanik/solidworks/video-22.md
+              - "Ders 23 – 3D Çizim Örneği 4": mekanik/solidworks/video-23.md
+              - "Ders 24 – 3D Çizim Örneği 5": mekanik/solidworks/video-24.md
+              - "Ders 25 – 3D Çizim Örneği 6": mekanik/solidworks/video-25.md
+          - Sac Metal (Sheet Metal):
+              - "Ders 1 – Taban Flanş": mekanik/solidworks/video-26.md
+              - "Ders 2 – Sac Levhaya Dönüştür": mekanik/solidworks/video-27.md
+              - "Ders 3 – Loft ile Büküm": mekanik/solidworks/video-28.md
+              - "Ders 4 – Basamak Oluştur, Çizgiden Bükme, Kenar Çekme": mekanik/solidworks/video-29.md
+              - "Ders 5 – Sac Kenarı Flanşı, Çevresel Flanş": mekanik/solidworks/video-30.md
+              - "Ders 6 – Köşeler (Corners)": mekanik/solidworks/video-31.md
+              - "Ders 7 – Süpürülmüş Flanş – Sac Levha Bayrağı": mekanik/solidworks/video-32.md
+              - "Ders 8 – Menfez – Kesme – Katla": mekanik/solidworks/video-33.md
+          - Montaj:
+              - "Ders 1 – Montaja Giriş": mekanik/solidworks/video-34.md

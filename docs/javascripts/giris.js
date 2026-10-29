@@ -260,7 +260,9 @@
     });
 
     setInterval(function () {
-      if (document.visibilityState === "visible" && Date.now() - sonEtkilesim < BOSTA_SINIRI) {
+      var videoOynuyor = window.EGITIM_VIDEO_OYNUYOR === true;
+      if (document.visibilityState === "visible" &&
+          (videoOynuyor || Date.now() - sonEtkilesim < BOSTA_SINIRI)) {
         biriken += 1;
       }
     }, 1000);

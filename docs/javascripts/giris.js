@@ -89,6 +89,10 @@
       "bc5855597abb9201c6923d5419aa988c28dc7e9259b62e8a472a6e48c3ebf12a": [
           "653dcf64de9a89f456f0404800148cdb",
           "b00b38d3a774a4152d902e37496c04c69fdf5258de06a1c89796c59fc7fab5bd"
+      ],
+      "d357666b00e7df69478e6006551ca6f644f13583c58afbf04dcfaecfa61eb692": [
+          "64203ea661cd8ab804659a56b0e738f1",
+          "168771032f87465826cbeb8581bb0dfc9587ed0f5cb02bd98eab8d2478610e1f"
       ]
   };
   var TEKRAR = 150000;             // PBKDF2 tekrar sayısı (üretim betiğiyle aynı olmalı)

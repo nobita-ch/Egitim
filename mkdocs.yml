@@ -1,4 +1,5 @@
 site_name: Python Materyalleri
+site_url: https://nobita-ch.github.io/Egitim/
 
 theme:
   name: material
@@ -11,6 +12,16 @@ theme:
       accent: indigo
   features:
     - navigation.footer
+
+extra_css:
+  - stylesheets/giris.css
+
+extra_javascript:
+  - javascripts/ayarlar.js
+  - javascripts/giris.js
+
+not_in_nav: |
+  /giris.md
 
 markdown_extensions:
   - pymdownx.highlight:

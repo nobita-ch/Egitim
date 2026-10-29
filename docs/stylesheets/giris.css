@@ -1,0 +1,73 @@
+/* Oturum doğrulanana kadar içeriği gizle (giriş sayfası hariç) */
+html:not(.oturum-acik):not(.giris-sayfasi) .md-main,
+html:not(.oturum-acik):not(.giris-sayfasi) .md-footer,
+html:not(.oturum-acik) .md-search,
+html:not(.oturum-acik) .md-tabs {
+  visibility: hidden;
+}
+
+/* Giriş sayfasında yalnızca formu göster */
+html.giris-sayfasi .md-header__button[for="__drawer"] {
+  visibility: hidden;
+}
+
+.giris-formu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 22rem;
+  margin-top: 1.2rem;
+}
+
+.giris-formu label {
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
+.giris-formu input {
+  font: inherit;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.3rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+.giris-formu input:focus {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 1px;
+}
+
+.giris-formu button {
+  margin-top: 0.8rem;
+  cursor: pointer;
+}
+
+.giris-formu button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.giris-mesaj {
+  min-height: 1.4em;
+  margin: 0.2rem 0 0;
+  color: var(--md-typeset-a-color);
+}
+
+.cikis-dugmesi {
+  margin-left: 0.6rem;
+  padding: 0.25rem 0.6rem;
+  font: inherit;
+  font-size: 0.65rem;
+  color: var(--md-primary-bg-color);
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.cikis-dugmesi:hover {
+  opacity: 1;
+}

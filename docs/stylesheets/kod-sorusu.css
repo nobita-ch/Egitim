@@ -206,3 +206,12 @@
 .kod-sorusu pre.kod-sorusu__hata          { box-shadow: inset 3px 0 0 #d63c3c; }
 .kod-sorusu pre.kod-sorusu__deger--hata,
 .kod-sorusu pre.kod-sorusu__hata          { color: #d63c3c; }
+
+.kod-sorusu__uyari {
+  margin: 0 0 0.6rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.3rem;
+  color: #8a5a00;
+  background: rgba(255, 184, 0, 0.16);
+}
+[data-md-color-scheme="slate"] .kod-sorusu__uyari { color: #ffc01e; }

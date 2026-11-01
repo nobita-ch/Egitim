@@ -1,15 +1,19 @@
 /*
- * LeetCode tarzı kod soruları.
+ * LeetCode tarzı kod soruları (fonksiyonsuz, ekran çıktısı karşılaştırmalı).
  *
- * Sayfadaki her <div class="kod-sorusu" data-id="..." data-fonksiyon="..."> içine
- * bir kod editörü, "Çalıştır" ve "Gönder" düğmeleri yerleştirir. Öğrencinin kodu
- * tarayıcıda Pyodide (WebAssembly ile çalışan Python) üzerinde, ayrı bir Web Worker
- * içinde çalıştırılır; böylece sonsuz döngü sayfayı kilitlemez.
+ * Sayfadaki her <div class="kod-sorusu" data-id="..."> içine bir kod editörü,
+ * "Çalıştır" ve "Gönder" düğmeleri yerleştirir. Öğrenci düz Python kodu yazar ve
+ * sonucu print() ile ekrana basar. Girdi değişkenleri (ör. saniye = 3661) her
+ * test için önceden tanımlanır. Kod tarayıcıda Pyodide (WebAssembly ile çalışan
+ * Python) üzerinde, ayrı bir Web Worker içinde çalıştırılır; böylece sonsuz döngü
+ * sayfayı kilitlemez.
  *
  * Soru verisi div içindeki <script type="application/json"> etiketinde durur:
- *   { "baslangic": "def f(x):\n    pass\n",
- *     "testler": [ { "girdi": "5", "gosterim": "x = 5", "beklenen": "'int'", "ornek": true }, ... ] }
- * "girdi" ve "beklenen" Python sabit ifadeleridir (ast.literal_eval ile okunur).
+ *   { "baslangic": "# ...\n",
+ *     "degiskenler": ["saniye"],
+ *     "testler": [ { "girdi": "3661", "gosterim": "saniye = 3661",
+ *                    "beklenen": "1 1 1", "ornek": true }, ... ] }
+ * "girdi" Python sabit ifadeleridir (ast.literal_eval), "beklenen" ekran çıktısıdır.
  */
 (function () {
   "use strict";
@@ -23,65 +27,75 @@
 
   /* ---------- Python tarafındaki hakem ---------- */
   var HAKEM = [
-    "import sys, io, json, math, ast, traceback",
+    "import sys, io, json, ast, traceback",
     "",
-    "def _esit(a, b):",
-    "    if isinstance(a, bool) or isinstance(b, bool):",
-    "        return type(a) is type(b) and a == b",
-    "    if isinstance(b, float):",
-    "        return isinstance(a, (int, float)) and math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-9)",
-    "    if isinstance(b, (tuple, list)):",
-    "        return isinstance(a, (tuple, list)) and len(a) == len(b) and all(_esit(x, y) for x, y in zip(a, b))",
-    "    return type(a) is type(b) and a == b",
+    "def _normal(metin):",
+    "    satirlar = [s.rstrip() for s in metin.replace('\\r\\n', '\\n').split('\\n')]",
+    "    while satirlar and not satirlar[-1]:",
+    "        satirlar.pop()",
+    "    return '\\n'.join(satirlar)",
     "",
     "def _hata_metni():",
     "    t, e, tb = sys.exc_info()",
     "    kendi = [f for f in traceback.extract_tb(tb) if f.filename == 'cozum.py']",
     "    yer = ' (satır %d)' % kendi[-1].lineno if kendi else ''",
     "    if t is SyntaxError or t is IndentationError:",
-    "        yer = ' (satır %s)' % e.lineno",
-    "        return '%s: %s%s' % (t.__name__, e.msg, yer)",
+    "        return '%s: %s (satır %s)' % (t.__name__, e.msg, e.lineno)",
     "    if t is EOFError:",
-    "        return 'EOFError: Bu soruda input() kullanılmaz; değerler fonksiyona parametre olarak gelir.'",
+    "        return 'EOFError: Bu soruda input() kullanılmaz; girdi değişkenleri sana hazır verilir.'",
     "    return '%s: %s%s' % (t.__name__, e, yer)",
+    "",
+    "def _sabit_atama(agac, adlar):",
+    "    # Girdi değişkenine doğrudan sabit değer atanmış mı? (ör. saniye = 3661)",
+    "    for dugum in agac.body:",
+    "        if isinstance(dugum, ast.Assign):",
+    "            hedefler = []",
+    "            for h in dugum.targets:",
+    "                hedefler += h.elts if isinstance(h, (ast.Tuple, ast.List)) else [h]",
+    "            if any(isinstance(h, ast.Name) and h.id in adlar for h in hedefler):",
+    "                try:",
+    "                    ast.literal_eval(dugum.value)",
+    "                    return [h.id for h in hedefler if isinstance(h, ast.Name) and h.id in adlar]",
+    "                except Exception:",
+    "                    pass",
+    "    return []",
     "",
     "def calistir(istek_json):",
     "    istek = json.loads(istek_json)",
-    "    ad = istek['fonksiyon']",
-    "    ns = {'__name__': '__cozum__'}",
-    "    eski_out, eski_in = sys.stdout, sys.stdin",
-    "    sys.stdin = io.StringIO('')",
+    "    adlar = istek['degiskenler']",
     "    try:",
-    "        sys.stdout = io.StringIO()",
-    "        try:",
-    "            exec(compile(istek['kod'], 'cozum.py', 'exec'), ns)",
-    "        except BaseException:",
-    "            return json.dumps({'hata': _hata_metni()})",
-    "        finally:",
-    "            sys.stdout = eski_out",
-    "        f = ns.get(ad)",
-    "        if not callable(f):",
-    "            return json.dumps({'hata': \"'%s' adında bir fonksiyon bulunamadı. Fonksiyonun adını değiştirme.\" % ad})",
-    "        sonuclar = []",
+    "        derlenmis = compile(istek['kod'], 'cozum.py', 'exec')",
+    "        agac = ast.parse(istek['kod'])",
+    "    except BaseException:",
+    "        return json.dumps({'hata': _hata_metni()})",
+    "    uyari = None",
+    "    atanan = _sabit_atama(agac, adlar)",
+    "    if atanan:",
+    "        uyari = (\"Kodunda '%s' değişkenine kendin değer atamışsın. Bu değişken her testte farklı bir \"",
+    "                 \"değerle sana hazır verilir; o satırı silersen kodun tüm testlerde çalışır.\") % atanan[0]",
+    "    eski_out, eski_in = sys.stdout, sys.stdin",
+    "    sonuclar = []",
+    "    try:",
     "        for t in istek['testler']:",
-    "            argumanlar = ast.literal_eval('(' + t['girdi'] + ',)')",
-    "            beklenen = ast.literal_eval(t['beklenen'])",
+    "            degerler = ast.literal_eval('(' + t['girdi'] + ',)')",
+    "            ns = {'__name__': '__main__'}",
+    "            ns.update(zip(adlar, degerler))",
     "            yazilan = io.StringIO()",
-    "            sys.stdout = yazilan",
+    "            sys.stdout, sys.stdin = yazilan, io.StringIO('')",
     "            try:",
-    "                r = f(*argumanlar)",
+    "                exec(derlenmis, ns)",
     "                hata = None",
     "            except BaseException:",
-    "                r, hata = None, _hata_metni()",
+    "                hata = _hata_metni()",
     "            finally:",
-    "                sys.stdout = eski_out",
+    "                sys.stdout, sys.stdin = eski_out, eski_in",
+    "            cikti = yazilan.getvalue()",
     "            sonuclar.append({",
-    "                'gecti': hata is None and _esit(r, beklenen),",
-    "                'cikti': None if hata else repr(r),",
+    "                'gecti': hata is None and _normal(cikti) == _normal(t['beklenen']),",
+    "                'cikti': cikti[:4000],",
     "                'hata': hata,",
-    "                'yazdirilan': yazilan.getvalue()[:2000],",
     "            })",
-    "        return json.dumps({'sonuclar': sonuclar})",
+    "        return json.dumps({'sonuclar': sonuclar, 'uyari': uyari})",
     "    finally:",
     "        sys.stdout, sys.stdin = eski_out, eski_in"
   ].join("\n");
@@ -246,7 +260,6 @@
     var veriEtiketi = kutu.querySelector('script[type="application/json"]');
     if (!veriEtiketi) return;
     var veri = JSON.parse(veriEtiketi.textContent);
-    var fonksiyon = kutu.getAttribute("data-fonksiyon");
     var anahtar = "kod-sorusu:" + kutu.getAttribute("data-id");
     var testler = veri.testler;
     var ornekler = testler.filter(function (t) { return t.ornek; });
@@ -316,12 +329,15 @@
       hazirlik.then(function () {
         if (calisiyor) sonuc.querySelector(".kod-sorusu__bilgi").textContent = "Çalıştırılıyor…";
       }, function () {});
-      pythonCalistir({ kod: editor.al(), fonksiyon: fonksiyon, testler: secilen })
+      pythonCalistir({ kod: editor.al(), degiskenler: veri.degiskenler, testler: secilen })
         .then(function (cevap) {
           mesgul(false);
           if (cevap.hata) hataGoster("Hata", cevap.hata);
-          else if (hepsi) gonderimGoster(secilen, cevap.sonuclar);
-          else orneklerGoster(secilen, cevap.sonuclar);
+          else {
+            if (hepsi) gonderimGoster(secilen, cevap.sonuclar);
+            else orneklerGoster(secilen, cevap.sonuclar);
+            if (cevap.uyari) sonuc.insertBefore(el("p", "kod-sorusu__uyari", cevap.uyari), sonuc.children[1] || null);
+          }
         })
         .catch(function (err) {
           mesgul(false);
@@ -350,10 +366,15 @@
       var d = el("div", "kod-sorusu__ayrinti");
       if (gizli) d.appendChild(el("p", "kod-sorusu__not", "Gizli test"));
       d.appendChild(satir("Girdi", test.gosterim || test.girdi));
-      d.appendChild(satir("Beklenen", test.beklenen));
-      if (r.hata) d.appendChild(satir("Hata", r.hata, "kod-sorusu__deger--hata"));
-      else d.appendChild(satir("Senin çıktın", r.cikti, r.gecti ? "kod-sorusu__deger--dogru" : "kod-sorusu__deger--yanlis"));
-      if (r.yazdirilan) d.appendChild(satir("Ekrana yazdırılanlar", r.yazdirilan));
+      d.appendChild(satir("Beklenen çıktı", test.beklenen));
+      var cikti = r.cikti ? r.cikti.replace(/\n$/, "") : "";
+      if (r.hata) {
+        if (cikti) d.appendChild(satir("Senin çıktın", cikti));
+        d.appendChild(satir("Hata", r.hata, "kod-sorusu__deger--hata"));
+      } else {
+        d.appendChild(satir("Senin çıktın", cikti || "(Ekrana hiçbir şey yazdırılmadı. Sonucu print() ile yazdırmayı unutma.)",
+          r.gecti ? "kod-sorusu__deger--dogru" : "kod-sorusu__deger--yanlis"));
+      }
       return d;
     }
 

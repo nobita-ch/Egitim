@@ -14,10 +14,10 @@ theme:
     - navigation.footer
 
 extra_css:
-  - stylesheets/kod-sorusu.css
+  - stylesheets/kod-sorusu.css?v=2
 
 extra_javascript:
-  - javascripts/kod-sorusu.js
+  - javascripts/kod-sorusu.js?v=2
 
 markdown_extensions:
   - admonition

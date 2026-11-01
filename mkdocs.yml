@@ -13,7 +13,15 @@ theme:
   features:
     - navigation.footer
 
+extra_css:
+  - stylesheets/kod-sorusu.css
+
+extra_javascript:
+  - javascripts/kod-sorusu.js
+
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -82,3 +90,9 @@ nav:
       - Sorular-23: "Sorular-23.md"
       - Sorular-24: "Sorular-24.md"
       - Sorular-25: "Sorular-25.md"
+  - Python Örnekleri 2:
+      - "1. Sayının Türü": "ornekler-2/1-sayinin-turu.md"
+      - "2. Saniyeyi Saate Çevir": "ornekler-2/2-saniyeyi-saate-cevir.md"
+      - "3. Değerleri Kaydır": "ornekler-2/3-degerleri-kaydir.md"
+      - "4. Market Fişi": "ornekler-2/4-market-fisi.md"
+      - "5. Not Ortalaması": "ornekler-2/5-not-ortalamasi.md"

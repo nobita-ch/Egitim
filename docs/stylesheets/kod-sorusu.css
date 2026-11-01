@@ -1,0 +1,208 @@
+/* ---------- Zorluk ve konu etiketleri ---------- */
+.zorluk,
+.konu-etiketi {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.6;
+  vertical-align: middle;
+}
+
+.zorluk--kolay { color: #0a7a3e; background: rgba(0, 175, 91, 0.14); }
+.zorluk--orta  { color: #9a6400; background: rgba(255, 184, 0, 0.18); }
+.zorluk--zor   { color: #c0262d; background: rgba(255, 55, 95, 0.14); }
+
+[data-md-color-scheme="slate"] .zorluk--kolay { color: #3ddc84; }
+[data-md-color-scheme="slate"] .zorluk--orta  { color: #ffc01e; }
+[data-md-color-scheme="slate"] .zorluk--zor   { color: #ff6b81; }
+
+.konu-etiketi {
+  font-weight: 500;
+  color: var(--md-default-fg-color--light);
+  background: var(--md-default-fg-color--lightest);
+}
+
+/* ---------- Kod sorusu kutusu ---------- */
+.kod-sorusu {
+  margin: 1.5rem 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+}
+
+.kod-sorusu__ust,
+.kod-sorusu__alt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  background: var(--md-default-fg-color--lightest);
+}
+
+.kod-sorusu__ust { justify-content: space-between; }
+.kod-sorusu__alt { justify-content: flex-end; flex-wrap: wrap; }
+
+.kod-sorusu__dil {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+}
+
+.kod-sorusu__ipucu {
+  margin-right: auto;
+  font-size: 0.65rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.kod-sorusu button {
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.kod-sorusu button:disabled { opacity: 0.55; cursor: wait; }
+
+.kod-sorusu__birincil {
+  color: #fff;
+  background: #1f9d55;
+}
+.kod-sorusu__birincil:hover:not(:disabled) { background: #188146; }
+
+.kod-sorusu__ikincil {
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+  border-color: var(--md-default-fg-color--lighter) !important;
+}
+.kod-sorusu__ikincil:hover:not(:disabled) { border-color: var(--md-default-fg-color--light) !important; }
+
+/* ---------- Editör ---------- */
+.kod-sorusu__editor {
+  font-size: 0.8rem;
+}
+
+.kod-sorusu__editor .CodeMirror {
+  height: auto;
+  min-height: 11rem;
+  font-family: var(--md-code-font-family), monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--md-code-fg-color);
+  background: var(--md-code-bg-color);
+}
+
+.kod-sorusu__editor .CodeMirror-scroll { min-height: 11rem; }
+.kod-sorusu__editor .CodeMirror-gutters {
+  background: var(--md-code-bg-color);
+  border-right: 1px solid var(--md-default-fg-color--lightest);
+}
+.kod-sorusu__editor .CodeMirror-linenumber { color: var(--md-default-fg-color--lighter); }
+.kod-sorusu__editor .CodeMirror-cursor { border-left-color: var(--md-code-fg-color); }
+.kod-sorusu__editor .CodeMirror-selected,
+.kod-sorusu__editor .CodeMirror-focused .CodeMirror-selected { background: var(--md-accent-fg-color--transparent); }
+.kod-sorusu__editor .CodeMirror-activeline-background { background: transparent; }
+
+.kod-sorusu__editor .cm-keyword  { color: var(--md-code-hl-keyword-color); }
+.kod-sorusu__editor .cm-def,
+.kod-sorusu__editor .cm-builtin  { color: var(--md-code-hl-function-color); }
+.kod-sorusu__editor .cm-string   { color: var(--md-code-hl-string-color); }
+.kod-sorusu__editor .cm-number   { color: var(--md-code-hl-number-color); }
+.kod-sorusu__editor .cm-comment  { color: var(--md-code-hl-comment-color); font-style: italic; }
+.kod-sorusu__editor .cm-operator { color: var(--md-code-hl-operator-color); }
+.kod-sorusu__editor .cm-variable,
+.kod-sorusu__editor .cm-variable-2,
+.kod-sorusu__editor .cm-property { color: var(--md-code-fg-color); }
+
+.kod-sorusu__metin {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 12rem;
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  resize: vertical;
+  font-family: var(--md-code-font-family), monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  tab-size: 4;
+  color: var(--md-code-fg-color);
+  background: var(--md-code-bg-color);
+}
+.kod-sorusu__metin:focus { outline: none; }
+
+/* ---------- Sonuç paneli ---------- */
+.kod-sorusu__sonuc {
+  padding: 0.8rem 0.9rem 0.9rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.75rem;
+}
+
+.kod-sorusu__bilgi,
+.kod-sorusu__ozet,
+.kod-sorusu__not {
+  margin: 0 0 0.5rem;
+  color: var(--md-default-fg-color--light);
+}
+.kod-sorusu__bilgi { margin: 0; }
+.kod-sorusu__not { font-style: italic; }
+
+.kod-sorusu__durum {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.kod-sorusu__durum--dogru { color: #1f9d55; }
+.kod-sorusu__durum--yanlis,
+.kod-sorusu__durum--hata  { color: #d63c3c; }
+
+.kod-sorusu__sekmeler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.kod-sorusu button.kod-sorusu__sekme {
+  font-weight: 500;
+  padding: 0.25rem 0.7rem;
+  color: var(--md-default-fg-color--light);
+  background: transparent;
+  border-color: transparent;
+}
+.kod-sorusu button.kod-sorusu__sekme.gecti { color: #1f9d55; }
+.kod-sorusu button.kod-sorusu__sekme.kaldi { color: #d63c3c; }
+.kod-sorusu button.kod-sorusu__sekme.secili { background: var(--md-default-fg-color--lightest); }
+
+.kod-sorusu__satir { margin-bottom: 0.55rem; }
+
+.kod-sorusu__etiket {
+  margin-bottom: 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+}
+
+.kod-sorusu pre.kod-sorusu__deger,
+.kod-sorusu pre.kod-sorusu__hata {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.3rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.75rem;
+  color: var(--md-code-fg-color);
+  background: var(--md-code-bg-color);
+}
+
+.kod-sorusu pre.kod-sorusu__deger--dogru  { box-shadow: inset 3px 0 0 #1f9d55; }
+.kod-sorusu pre.kod-sorusu__deger--yanlis,
+.kod-sorusu pre.kod-sorusu__deger--hata,
+.kod-sorusu pre.kod-sorusu__hata          { box-shadow: inset 3px 0 0 #d63c3c; }
+.kod-sorusu pre.kod-sorusu__deger--hata,
+.kod-sorusu pre.kod-sorusu__hata          { color: #d63c3c; }

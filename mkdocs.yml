@@ -14,10 +14,10 @@ theme:
     - navigation.footer
 
 extra_css:
-  - stylesheets/kod-sorusu.css?v=2
+  - stylesheets/kod-sorusu.css?v=3
 
 extra_javascript:
-  - javascripts/kod-sorusu.js?v=2
+  - javascripts/kod-sorusu.js?v=3
 
 markdown_extensions:
   - admonition
@@ -92,7 +92,7 @@ nav:
       - Sorular-25: "Sorular-25.md"
   - Python Örnekleri 2:
       - "1. Sayının Türü": "ornekler-2/1-sayinin-turu.md"
-      - "2. Saniyeyi Saate Çevir": "ornekler-2/2-saniyeyi-saate-cevir.md"
-      - "3. Değerleri Kaydır": "ornekler-2/3-degerleri-kaydir.md"
-      - "4. Market Fişi": "ornekler-2/4-market-fisi.md"
-      - "5. Not Ortalaması": "ornekler-2/5-not-ortalamasi.md"
+      - "2. Dakikayı Saate Çevir": "ornekler-2/2-dakikayi-saate-cevir.md"
+      - "3. İki Değişkeni Değiştir": "ornekler-2/3-degerleri-degistir.md"
+      - "4. İndirimli Fiyat": "ornekler-2/4-indirimli-fiyat.md"
+      - "5. Metinleri Sayıya Çevir": "ornekler-2/5-metinleri-topla.md"
